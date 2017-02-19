@@ -4,8 +4,8 @@ angular.module("servicesMdl", ["ngResource"])
 
 .factory("contactTypesService", function (iconKind) {
     var enums = [
-        { value: 0, translation: "Programista", iconKind: iconKind.icon, icon: "code icon" },
-        { value: 1, translation: "Tester", iconKind: iconKind.icon, icon: "bug icon" }
+        { value: 1, translation: "Programista", iconKind: iconKind.icon, icon: "code icon" },
+        { value: 2, translation: "Tester", iconKind: iconKind.icon, icon: "bug icon" }
     ];
 
     return {

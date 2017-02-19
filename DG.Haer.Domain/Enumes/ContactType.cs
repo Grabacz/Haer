@@ -2,7 +2,8 @@
 {
     public enum ContactType : byte
     {
-        Programmer = 0,
-        Tester = 1
+        NotSet = 0,
+        Programmer = 1,
+        Tester = 2
     }
 }

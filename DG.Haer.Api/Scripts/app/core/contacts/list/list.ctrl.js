@@ -63,8 +63,8 @@ angular.module("contactsMdl")
             current: 0,
             options: [
                 { icon: "filter", value: "" },
-                { icon: "code", value: "0"},
-                { icon: "bug", value: "1"}
+                { icon: "code", value: "1"},
+                { icon: "bug", value: "2"}
             ],
             next: function(){
                 if ($scope.filter.type.current >= 2) {
