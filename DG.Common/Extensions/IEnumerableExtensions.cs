@@ -7,14 +7,18 @@ namespace DG.Common
 {
     public static class IEnumerableExtensions
     {
-        public static IEnumerable<T> ConditionalWhere<T>(this IEnumerable<T> source, Func<bool> condition, Expression<Func<T, bool>> predicate)
+        public static IEnumerable<T> ConditionalWhere<T>(this IEnumerable<T> @this, Func<bool> condition, Expression<Func<T, bool>> predicate)
         {
             if (condition())
-            {
-                return source.Where(predicate.Compile());
-            }
+                return @this.Where(predicate.Compile());
 
-            return source;
+            return @this;
+        }
+
+        public static IEnumerable<T> GetCount<T>(this IEnumerable<T> @this, out int count)
+        {
+            count = @this.Count();
+            return @this;
         }
     }
 }

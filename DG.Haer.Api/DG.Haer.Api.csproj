@@ -218,6 +218,7 @@
     <Compile Include="Infrastructure\Core\SearchSet.cs" />
     <Compile Include="Infrastructure\Core\WebApiController.cs" />
     <Compile Include="Infrastructure\Extensions\AutoMapperExtensions.cs" />
+    <Compile Include="Infrastructure\Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Infrastructure\Mappings\DomainToViewModelMappingProfile.cs" />
     <Compile Include="Infrastructure\Mappings\ViewModelToDomainMappingProfile.cs" />
     <Compile Include="Infrastructure\Core\PaginationSet.cs" />

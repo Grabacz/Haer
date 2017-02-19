@@ -29,26 +29,22 @@ namespace DG.Haer.Api.Controllers
         [ResponseType(typeof(PaginationSet<ContactViewModel>))]
         public IHttpActionResult Get(SearchSet searchSet)
         {
+            int items;
+
             var entities = _contactsService.GetContacts()
                 .OrderBy(x => x.Id)
-                .ConditionalWhere(() => searchSet.Filter.Name != null, x => x.Name.Contains(searchSet.Filter.Name))
-                .ConditionalWhere(() => searchSet.Filter.ContactType != null, x => x.ContactType == searchSet.Filter.ContactType)
-                .ConditionalWhere(() => searchSet.Filter.Experience != null, x => x.Experience == searchSet.Filter.Experience)
-                .ConditionalWhere(() => searchSet.Filter.Salary != null, x => x.Salary == searchSet.Filter.Salary)
-                .ConditionalWhere(() => searchSet.Filter.SalaryGreaterThan5000 != false, x => x.Salary > 5000)
-                .ConditionalWhere(() => searchSet.Filter.ExperiencedProgrammer != false, x => x.ContactType == ContactType.Programmer && x.Experience == 5);
-
-            IEnumerable<Contact> pageEntities = entities
+                .Filter(searchSet.Filter)
+                .GetCount(out items)
                 .Skip((searchSet.SelectedPage - 1) * _pageSize)
                 .Take(_pageSize);
 
-            var vms = pageEntities.ToBussinessObjects<ContactViewModel>();
+            var vms = entities.ToBussinessObjects<ContactViewModel>();
 
             var response = new PaginationSet<ContactViewModel>()
             {
                 CurrentPage = searchSet.SelectedPage,
                 Items = vms,
-                TotalItems = entities.Count(),
+                TotalItems = items,
                 ItemsPerPage = _pageSize
             };
 
