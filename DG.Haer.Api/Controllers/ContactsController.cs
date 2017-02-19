@@ -5,7 +5,6 @@ using DG.Haer.Api.Infrastructure.Core;
 using DG.Haer.Business;
 using DG.Haer.Domain;
 using DG.Haer.Service;
-using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -53,7 +52,7 @@ namespace DG.Haer.Api.Controllers
                 ItemsPerPage = _pageSize
             };
 
-                return Ok(response);
+            return Ok(response);
         }
 
         [HttpPost]
@@ -62,7 +61,7 @@ namespace DG.Haer.Api.Controllers
         {
             if (!ModelState.IsValid)
             {
-                //var response = ModelState.Keys.SelectMany(k => ModelState[k].Errors).Select(m => m.ErrorMessage).ToArray();
+                var response = ModelState.Keys.SelectMany(k => ModelState[k].Errors).Select(m => m.ErrorMessage).ToArray();
                 return BadRequest(ModelState);
             }
 
@@ -71,21 +70,6 @@ namespace DG.Haer.Api.Controllers
             _contactsService.SaveContact();
 
             return Created("", entity);
-        }
-    }
-    public static class Ext
-    {
-        public static IEnumerable<T> ConditionalWhere<T>(
-        this IEnumerable<T> source,
-        Func<bool> condition,
-        System.Linq.Expressions.Expression<Func<T, bool>> predicate)
-        {
-            if (condition())
-            {
-                return source.Where(predicate.Compile());
-            }
-
-            return source;
         }
     }
 }
