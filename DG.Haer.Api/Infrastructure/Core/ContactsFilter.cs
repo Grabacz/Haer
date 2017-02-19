@@ -10,6 +10,5 @@ namespace DG.Haer.Api.Infrastructure.Core
         public ContactType? ContactType { get; set; }
         public bool ExperiencedProgrammer { get; set; }
         public bool SalaryGreaterThan5000 { get; set; }
-
     }
 }

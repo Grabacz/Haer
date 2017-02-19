@@ -95,7 +95,7 @@ angular.module("contactsMdl")
 
     $scope.action = {
         getModels: function (page, filter) {
-            contactsService.getContacts({
+            contactsService.searchContacts({
                 selectedPage: page,
                 filter: filter
             })

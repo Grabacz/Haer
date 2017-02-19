@@ -7,6 +7,7 @@ using DG.Haer.Domain;
 using DG.Haer.Service;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -16,27 +17,39 @@ namespace DG.Haer.Api.Controllers
     [RoutePrefix("api/contacts")]
     public class ContactsController : WebApiController
     {
-        private readonly int _pageSize = int.Parse(ConfigurationManager.AppSettings["pageSize"]);
         private readonly IContactsService _contactsService;
+
+        public int PageSize { get; set; } = int.Parse(ConfigurationManager.AppSettings["pageSize"]);
 
         public ContactsController(IContactsService contactsService)
         {
             _contactsService = contactsService;
         }
 
-        [HttpPut]
+        [HttpGet]
         [Route("list")]
-        [ResponseType(typeof(PaginationSet<ContactViewModel>))]
-        public IHttpActionResult Get(SearchSet searchSet)
+        [ResponseType(typeof(IEnumerable<ContactViewModel>))]
+        public IHttpActionResult GetAll()
         {
-            int items;
+            var entities = _contactsService.GetContacts();
+            var vms = entities.ToBussinessObjects<ContactViewModel>();
+
+            return Ok(vms);
+        }
+
+        [HttpPut]
+        [Route("search")]
+        [ResponseType(typeof(PaginationSet<ContactViewModel>))]
+        public IHttpActionResult Search(SearchSet searchSet)
+        {
+            int itemsCount;
 
             var entities = _contactsService.GetContacts()
                 .OrderBy(x => x.Id)
                 .Filter(searchSet.Filter)
-                .GetCount(out items)
-                .Skip((searchSet.SelectedPage - 1) * _pageSize)
-                .Take(_pageSize);
+                .GetCount(out itemsCount)
+                .Skip((searchSet.SelectedPage - 1) * PageSize)
+                .Take(PageSize);
 
             var vms = entities.ToBussinessObjects<ContactViewModel>();
 
@@ -44,8 +57,8 @@ namespace DG.Haer.Api.Controllers
             {
                 CurrentPage = searchSet.SelectedPage,
                 Items = vms,
-                TotalItems = items,
-                ItemsPerPage = _pageSize
+                TotalItems = itemsCount,
+                ItemsPerPage = PageSize
             };
 
             return Ok(response);
@@ -62,10 +75,13 @@ namespace DG.Haer.Api.Controllers
             }
 
             var entity = vm.ToDomainObject<Contact>();
+
             _contactsService.AddContact(entity);
             _contactsService.SaveContact();
 
-            return Created("", entity);
+            var responseEntity = entity.ToBussinessObject<ContactViewModel>();
+
+            return Created("", responseEntity);
         }
     }
 }

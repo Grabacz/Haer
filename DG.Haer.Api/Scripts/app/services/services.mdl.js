@@ -61,10 +61,10 @@ angular.module("servicesMdl", ["ngResource"])
                 getUrl: function () {
                     return baseUrl;
                 },
-                getContacts: function (searchSet) {
+                searchContacts: function (searchSet) {
                     return $http({
                         method: "PUT",
-                        url: baseUrl + "/list",
+                        url: baseUrl + "/search",
                         data: searchSet,
                         headers: {
                             "Content-Type": "application/json"

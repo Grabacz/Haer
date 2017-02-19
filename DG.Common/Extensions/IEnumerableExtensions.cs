@@ -17,7 +17,7 @@ namespace DG.Common
 
         public static IEnumerable<T> GetCount<T>(this IEnumerable<T> @this, out int count)
         {
-            count = @this.Count();
+            count = @this.ToList().Count();
             return @this;
         }
     }

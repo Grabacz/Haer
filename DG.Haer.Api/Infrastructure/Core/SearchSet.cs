@@ -12,5 +12,11 @@ namespace DG.Haer.Api.Infrastructure.Core
         {
             Filter = new ContactsFilter();
         }
+
+        public SearchSet(int selectedPage, ContactsFilter filter)
+        {
+            SelectedPage = selectedPage;
+            Filter = filter;
+        }
     }
 }

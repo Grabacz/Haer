@@ -27,7 +27,7 @@ namespace DG.Haer.Business
 
         private bool ValidContactType(byte contactType)
         {
-            return contactType == 0 || contactType == 1;
+            return contactType == 1 || contactType == 2;
         }
     }
 }
