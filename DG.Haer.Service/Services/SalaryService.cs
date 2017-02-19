@@ -4,7 +4,7 @@ namespace DG.Haer.Service.Services
 {
     public class SalaryService : ISalaryService
     {
-        private ISalaryStrategyFactory _salaryStrategyFactory;
+        private readonly ISalaryStrategyFactory _salaryStrategyFactory;
 
         public SalaryService(ISalaryStrategyFactory salaryStrategyFactory)
         {

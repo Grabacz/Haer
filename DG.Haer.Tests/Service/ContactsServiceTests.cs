@@ -22,6 +22,9 @@ namespace DG.Haer.Tests.Service
         public void SetUp()
         {
             SetupContacts();
+            SetUpContactsRepository();
+            SetUpUnitOfWork();
+            SetUpContactsService();
         }
 
         public void SetupContacts()
@@ -39,7 +42,8 @@ namespace DG.Haer.Tests.Service
             repo.Setup(x => x.GetById(It.IsAny<int>())).Returns(new Func<int, Contact>(id => _contacts.Find(x => x.Id == id)));
             repo.Setup(x => x.Add(It.IsAny<Contact>())).Callback(new Action<Contact>(newContact =>
             {
-                var id = _contacts.Last().Id++;
+                var id = _contacts.Last().Id;
+                id++;
                 newContact.Id = id;
                 _contacts.Add(newContact);
             }));
@@ -81,6 +85,31 @@ namespace DG.Haer.Tests.Service
         public void SetUpContactsService()
         {
             _contactsService = new ContactsService(_contactsRepository, _unitOfWork);
+        }
+
+        [Test]
+        public void ServiceShouldGetAllContacts()
+        {
+            Assert.AreEqual(_contacts, _contactsService.GetContacts());
+            Assert.AreEqual(_contacts.Count(), _contactsService.GetContacts().Count());
+        }
+
+        [Test]
+        public void ServiceShouldAddNewContact()
+        {
+            var contact = new Contact()
+            {
+                Name = "Test1",
+                ContactType = ContactType.Programmer,
+                Experience = 1,
+                Salary = 1
+            };
+
+            var maxId = _contacts.Max(x => x.Id);
+            _contactsService.AddContact(contact);
+
+            Assert.That(contact, Is.EqualTo(_contacts.Last()));
+            Assert.That(maxId + 1, Is.EqualTo(_contacts.Last().Id));
         }
     }
 }

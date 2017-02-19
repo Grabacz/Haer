@@ -25,12 +25,11 @@ namespace DG.Haer.Tests
         }
 
         [Test]
-        [ExpectedException(typeof(NotSupportedException))]
         public void WhenExperienceIsZeroThrowsException()
         {
             var salaryStrategy = new SalaryStrategyForProgrammer();
-
-            salaryStrategy.CalculateSalary(0);
+    
+            Assert.Catch<NotSupportedException>(() => salaryStrategy.CalculateSalary(0));
         }
     }
 }

@@ -81,6 +81,8 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\ContactsServiceTests.cs" />
+    <Compile Include="Service\SalaryServiceTests.cs" />
+    <Compile Include="Service\SalaryStrategyFactoryTests.cs" />
     <Compile Include="Service\SalaryStrategyForProgrammerTests.cs" />
     <Compile Include="Service\SalaryStrategyForTesterTests.cs" />
   </ItemGroup>
