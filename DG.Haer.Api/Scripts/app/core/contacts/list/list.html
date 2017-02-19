@@ -1,0 +1,97 @@
+﻿<div>
+        <div class="ui accordion fluid styled black" ng-accordion>
+            <div class="title">
+                <i class="dropdown icon" id="accordion-trigger"></i>Zarządzaj filtrowaniem
+                <i class="remove link icon" style="float:right;" ng-click="filter.clear()" ng-show="filter.isActive" data-content="Usuń filtr" data-position="top right" cn-popup></i>
+            </div>
+            <div class="content">
+                <div class="ui form small">
+                    <div class="fields equal width">
+                        <div class="field">
+                            <label></label>
+                            <div class="ui slider checkbox">
+                                <input type="checkbox" ng-model="filter.model.experiencedProgrammer">
+                                <label>Programista z 5 letnim stażem</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label></label>
+                            <div class="ui slider checkbox">
+                                <input type="checkbox" ng-model="filter.model.salaryGreaterThan5000">
+                                <label>Kontakty ze stawką > 5000</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <table class="ui table small celled vary compact selectable">
+        <thead>
+            <tr>
+                <th class="one wide"></th>
+                <th class="">Nazwa</th>
+                <th class="three wide right aligned">Doświadczenie</th>
+                <th class="three wide right aligned">Stawka</th>
+                <th class="two wide center aligned">Typ</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="positive">
+                <th><div style="height: 32px;"></div></th>
+                <th>
+                    <div class="ui transparent icon fluid input">
+                        <input ng-model="filter.model.name">
+                        <i class="remove link icon" ng-show="filter.model.name" ng-click="filter.clear('name')"></i>
+                    </div>
+                </th>
+                <th>
+                    <div class="ui fluid icon transparent input">
+                        <input type="number" step="1" min="1" max="100" ng-model="filter.model.experience"> 
+                        <i class="remove link icon" ng-show="filter.model.experience" ng-click="filter.clear('experience')"></i>
+                    </div>
+                </th>
+                <th>
+                    <div class="ui fluid icon transparent input">
+                        <input type="number" step="1" min="1" max="20000" ng-model="filter.model.salary">
+                        <i class="remove link icon" ng-show="filter.model.salary" ng-click="filter.clear('salary')"></i>
+                    </div>
+                </th>
+                <th class="center aligned">
+                    <i class="icon bleck link" ng-class="filter.type.getIcon()" ng-click="filter.type.next()"></i> 
+                </th>
+            </tr>
+            <tr class="warning" ng-hide="vm.models.length">
+                <td colspan="1"></td>
+                <td colspan="4"><i class="attention icon"></i>Brak danych</td>
+            </tr>
+            <tr ng-repeat="model in vm.models">
+                <td class="center aligned" style="color: #DDD;">{{$index + 1 + (pagination.itemsPerPage * (pagination.currentPage - 1))}}</td>
+                <td>{{model.name}}</td>
+                <td class="right aligned">{{model.experience}}</td>
+                <td class="right aligned">{{model.salary | currency}}</td>
+                <td class="center aligned"> <i class="link" ng-class="model.contactType | to:vm.options.contactTypes:'value':'icon'" data-content="{{model.contactType | to:vm.options.contactTypes:'value':'translation'}}" data-position="right center" cn-popup></i> </td>
+            </tr>
+        </tbody>
+        <tfoot style="padding-top: 30px; padding-bottom: 30px;">
+            <tr style="padding-top: 30px; padding-bottom: 30px;">
+                <th colspan="5"  style="height: 10px;">
+                    <div style="height: 20px;"></div>
+                    <div>
+                        <div class="ui mini pagination menu right floated">
+                            <a class="icon item" ng-click="pagination.previousPage();" ng-class="{disabled: pagination.currentPage === 1}">
+                                <i class="left chevron icon"></i>
+                            </a>
+                            <a class="item" ng-repeat="page in pagination.pages" ng-class="{active: page === pagination.currentPage}" ng-click="pagination.setCurrentPage(page)">
+                                {{page}}
+                            </a>
+                            <a class="icon item" ng-click="pagination.nextPage();" ng-class="{disabled: pagination.currentPage === pagination.totalPages}">
+                                <i class="right chevron icon"></i>
+                            </a>
+                        </div>
+                    </div>
+                </th>
+            </tr>
+        </tfoot>
+    </table>
+</div>

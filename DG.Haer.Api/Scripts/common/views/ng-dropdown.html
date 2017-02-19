@@ -1,0 +1,18 @@
+﻿<div id="mm" class="ui selection dropdown" ng-class="{disabled: isDisabled}">
+    <input type="hidden" ng-model="model">
+    <i class="dropdown icon"></i>
+    <div class="default text"></div>
+    <i class="dropdown icon"></i>
+    <div class="menu">
+        <div class="item" ng-if="isFilter" data-value="">
+            Wszystkie
+        </div>
+        <div class="item" ng-if="isEnumeration" data-value="{{option.value}}" ng-repeat="option in options">
+            <i ng-class="option.icon" ng-if="option.iconKind === iconKind.icon"></i>
+            {{option.translation}}
+        </div>
+        <div class="item" ng-if="isList" data-value="{{option.id}}" ng-repeat="option in options">
+            {{option.code}}
+        </div>
+    </div>
+</div>

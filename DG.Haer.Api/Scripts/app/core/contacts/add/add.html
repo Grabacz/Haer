@@ -1,0 +1,39 @@
+﻿<div class="ui form small">
+    <div class="fields equal width">
+        <div class="field">
+            <label>Nazwa</label>
+            <input ng-model="vm.model.name">
+        </div>
+        <div class="field">
+            <label>Typ</label>
+            <ng-dropdown options="vm.options.contactTypes" ng-model="vm.model.contactType" is-enumeration="true"></ng-dropdown>
+        </div>
+    </div>
+    <div class="fields equal width">
+        <div class="field">
+            <label>Doświadczenie</label>
+            <div class="ui right labeled input">
+                <input type="number" step="1" min="1" max="100" ng-model="vm.model.experience">
+                <div class="ui basic label"> lat </div>
+            </div>
+        </div>
+        <div class="field">
+            <label>Stawka</label>
+            <div class="ui right labeled input">
+                <input type="number" step="100" min="0" ng-model="vm.model.salary" ng-readonly="true">
+                <div class="ui basic label"> zł </div>
+            </div>
+        </div>
+    </div>
+    <div class="ui grid" style="background-color: #F9FAFB !important; margin-top: 10px; border-top: 1px solid #D9DADB;">
+        <div class="three column row">
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column">
+                <button class="ui small basic fluid button" ng-click="action.save()" style="background-color: #FFF !important;">
+                    <i class="save icon"></i>Zapisz
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
